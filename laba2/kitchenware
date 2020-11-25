@@ -1,0 +1,67 @@
+import random
+from abc import ABC, abstractmethod
+
+
+class MegaFabric(ABC):
+
+    def template_method(self):
+        self.create_skeleton()
+        self.create_cap()
+        self.create_handles()
+        self.assemble()
+
+
+    def create_skeleton(self):
+        shape_list = ["Round", "Square", "Oval"]
+        skeleton_shape = random.choice(shape_list)
+        skeleton = str(skeleton_shape + " pan")
+        return skeleton
+
+
+    @abstractmethod
+    def assemble(self):
+        pass
+
+    def create_cap(self):
+        pass
+
+    def create_handles(self):
+        pass
+
+class FabricMos(MegaFabric):
+
+    def create_handles(self):
+        handles_num = random.randint(1,4)
+        handles_num = str(handles_num)
+        if handles_num == 1:
+            self.handles = " with " + handles_num + " handle"
+        else:
+            self.handles = " with " + handles_num + " handles"
+        return self.handles
+
+    def assemble(self):
+        pan = self.create_skeleton() + self.handles
+        print("FabricMos made -", pan)
+
+class FabricSpb(MegaFabric):
+
+    def create_cap(self):
+        self.cap = (" with cap")
+        return self.cap
+
+    def assemble(self):
+        pan = str(self.create_skeleton()) + self.cap
+        print("Fabric SPB made -", pan)
+
+
+def client_code(MegaFabric):
+    MegaFabric.template_method()
+
+if __name__ == "__main__":
+    print("Same client code can work with different subclasses:")
+    client_code(FabricMos())
+    print("")
+
+    print("Same client code can work with different subclasses:")
+    client_code(FabricSpb())
+
